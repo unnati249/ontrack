@@ -1,120 +1,100 @@
-
-
 <% include ./header %>
-	
-
-	<% if(typeof pickup_address !== "undefined" && pickup_address !== null) { %>
-		
-	<div class="success" style="
-  background-color: #ddffdd;
-  border-left: 6px solid #4CAF50; 
-  padding: 20px;">
-	<p><strong>Success!</strong> Your pickup_address is <%=pickup_address%>.</p>
-	</div>
-	
-	<% } %>
-	
-	<% if(typeof message !== "undefined" && message !== null) { %>
-		
-	<div class="danger" style="
-  background-color: #ffdddd;
-  border-left: 6px solid #f44336; 
-  padding: 20px;">
-	<p><strong>Alert!</strong><%=message%></p>
-	</div>
-	
-	<% } %>
-	<div>
-	<form action="/logout" method="post">
-    <button type="submit" class="btn btn-primary btn-block" style="background-color:#4e44d8; width: fit-content; position: absolute;
-    right: 20px;
-    top: 60px; " > Log out</button>
-	</form>
-	</div>
-	 
-	<% 
-	if(typeof models !== "undefined" && models !== null) {
-	for(var i=0; i < models.length; i=i+3) { 
-	
-	%>
-	
-	<div class="row" style="position: relative;
-    
-    margin: 60px;
-    padding: 50px">
-    <div class="col-md-4">
+<% if(typeof pickup_address !== "undefined" && pickup_address !== null) { %>
+<div class="success" style="
+   background-color: #ddffdd;
+   border-left: 6px solid #4CAF50; 
+   padding: 20px;">
+   <p><strong>Success!</strong> Your pickup_address is <%=pickup_address%>.</p>
+</div>
+<% } %>
+<% if(typeof message !== "undefined" && message !== null) { %>
+<div class="danger" style="
+   background-color: #ffdddd;
+   border-left: 6px solid #f44336; 
+   padding: 20px;">
+   <p><strong>Alert!</strong><%=message%></p>
+</div>
+<% } %>
+<div>
+   <form action="/logout" method="post">
+      <button type="submit" class="btn btn-primary btn-block" style="background-color:#4e44d8; width: fit-content; position: absolute;
+         right: 20px;
+         top: 60px; " > Log out</button>
+   </form>
+</div>
+<% 
+   if(typeof models !== "undefined" && models !== null) {
+   for(var i=0; i < models.length; i=i+3) { 
+   
+   %>
+<div class="row" style="position: relative;
+   margin: 60px;
+   padding: 50px">
+   <div class="col-md-4">
       <%  if(typeof models[i] !== "undefined" && models[i] !== null ){ %>
-	<form action="/upload" method="post">
-      <div class="thumbnail">
-        <a href="/w3images/fjords.jpg" target="_blank">
-		
-          <img src="<%=models[i].image%>" alt="Fjords" style="width:100%">
-			<input type="hidden" id="model_id" name="model_id" value="<%=models[i].model_id%>">
-          <div class="caption">
-            <p style="text-align: center;"><%= models[i].model_name %> </p>
-          </div>
-		 
-        </a>
-      </div>
-	 <div>
-    <button type="submit" class="btn btn-primary btn-block" style="background-color: #4e44d8;
-    width: fit-content;
-    position: relative;
-    left: 125px;" > Book</button>
-	</div>
-	</form>
-    <%}%>
-    </div>
-    <div class="col-md-4">
+      <form action="/upload" method="post">
+         <div class="thumbnail">
+            <a href="/w3images/fjords.jpg" target="_blank">
+               <img src="<%=models[i].image%>" alt="Fjords" style="width:100%">
+               <input type="hidden" id="model_id" name="model_id" value="<%=models[i].model_id%>">
+               <div class="caption">
+                  <p style="text-align: center;"><%= models[i].model_name %> </p>
+               </div>
+            </a>
+         </div>
+         <div>
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: #4e44d8;
+               width: fit-content;
+               position: relative;
+               left: 125px;" > Book</button>
+         </div>
+      </form>
+      <%}%>
+   </div>
+   <div class="col-md-4">
       <%  if(typeof models[i+1] !== "undefined" && models[i+1] !== null ){ %>
-	<form action="/upload" method="post">
-      <div class="thumbnail">
-        <a href="/w3images/fjords.jpg" target="_blank">
-		 
-          <img src="<%=models[i+1].image%>" alt="Fjords" style="width:100%">
-		 <input type="hidden" id="model_id" name="model_id" value="<%=models[i+1].model_id%>">
-          <div class="caption">
-            <p style="text-align: center;"><%= models[i+1].model_name %> </p>
-          </div>
-		  
-        </a>
-      </div>
-	 <div>
-    <button type="submit" class="btn btn-primary btn-block" style="background-color: #4e44d8;
-    width: fit-content;
-    position: relative;
-    left: 125px;" > Book</button>
-	</div>
-	</form>
-	<%}%>
-    </div>
-    <div class="col-md-4">
-  <%  if(typeof models[i+2] !== "undefined" && models[i+2] !== null ){ %>
-	<form action="/upload" method="post">
-	
-      <div class="thumbnail">
-        <a href="/w3images/fjords.jpg" target="_blank">
-          <img src="<%=models[i+2].image%>" alt="Fjords" style="width:100%">
-		 <input type="hidden" id="model_id" name="model_id" value="<%=models[i+2].model_id%>">
-          <div class="caption">
-            <p style="text-align: center;"><%= models[i+2].model_name %> </p>
-          </div>
-        </a>
-      </div>
-	 <div>
-    <button type="submit" class="btn btn-primary btn-block" style="background-color: #4e44d8;
-    width: fit-content;
-    position: relative;
-    left: 125px;" > Book</button>
-	</div>
-	</form>
-	<%}%>
-    </div>
-  </div>
- <% } 
- }
- %>
- 
-
+      <form action="/upload" method="post">
+         <div class="thumbnail">
+            <a href="/w3images/fjords.jpg" target="_blank">
+               <img src="<%=models[i+1].image%>" alt="Fjords" style="width:100%">
+               <input type="hidden" id="model_id" name="model_id" value="<%=models[i+1].model_id%>">
+               <div class="caption">
+                  <p style="text-align: center;"><%= models[i+1].model_name %> </p>
+               </div>
+            </a>
+         </div>
+         <div>
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: #4e44d8;
+               width: fit-content;
+               position: relative;
+               left: 125px;" > Book</button>
+         </div>
+      </form>
+      <%}%>
+   </div>
+   <div class="col-md-4">
+      <%  if(typeof models[i+2] !== "undefined" && models[i+2] !== null ){ %>
+      <form action="/upload" method="post">
+         <div class="thumbnail">
+            <a href="/w3images/fjords.jpg" target="_blank">
+               <img src="<%=models[i+2].image%>" alt="Fjords" style="width:100%">
+               <input type="hidden" id="model_id" name="model_id" value="<%=models[i+2].model_id%>">
+               <div class="caption">
+                  <p style="text-align: center;"><%= models[i+2].model_name %> </p>
+               </div>
+            </a>
+         </div>
+         <div>
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: #4e44d8;
+               width: fit-content;
+               position: relative;
+               left: 125px;" > Book</button>
+         </div>
+      </form>
+      <%}%>
+   </div>
+</div>
+<% } 
+   }
+   %>
 <% include ./footer %>
-	

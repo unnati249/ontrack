@@ -37,7 +37,6 @@ app.use(function(req, res, next) {
 	function loadAdmin(req, res){
 		db.query("SELECT A.`model_id`, A.`model_name`, A.`image` FROM `bike_models` As A LEFT JOIN `bikes` As B ON A.`model_id` = B.`model_id` where B.`availability` = 1 group by B.`model_id`", function (err, result, fields) {
 		  if (err) throw err;
-		  //console.log(result);
 		  res.render('admin',{models :result});
 		});
 	}
@@ -47,11 +46,9 @@ app.use(function(req, res, next) {
 	app.get('/signup',function(req,res){
 	sess = req.session;
 	if(sess.user_id) {
-		//console.log(sess.user_id);
 		loadAdmin(req,res);
 	}
 	else {
-		//console.log(sess.user_id);
 		res.render('signup');
 	}
 	});
@@ -64,22 +61,14 @@ app.use(function(req, res, next) {
 	
 	sess = req.session;
 	if(sess.user_id) {
-		//console.log(sess.user_id);
 		loadAdmin(req,res);
 	}else {
-	console.log(sess.user_id);
-	console.log(req.body.fullName);
-	console.log(req.body.email);
-	console.log(req.body.phoneNumber);
-	console.log(req.body.password);
-
-
+	
 	  var params = [req.body.fullName, req.body.email, req.body.phoneNumber, req.body.password];
 
 	  var sql = "INSERT INTO users (full_name,email,phone,pwd) VALUES (?,?,?,?)";
 	  db.query(sql,params, function (err, result) {
 		if (err) throw err;
-		console.log("1 record inserted");
 	  });
 
 	 res.render('login');
@@ -89,26 +78,17 @@ app.use(function(req, res, next) {
 	app.post('/login',function (req, res) {
 	sess = req.session;
 	if(sess.user_id) {
-	//console.log(sess.user_id);
 	loadAdmin(req,res);
 	}else {
-	//console.log(sess.user_id);
-	//console.log(req.body.email);
-	//console.log(req.body.password);
 
 	db.query("SELECT user_id, pwd FROM users where email = ?",req.body.email, function (err, result, fields) {
     if (err) throw err;
-    //console.log(result[0].pwd);
 	if(result[0].pwd == req.body.password){
 		sess = req.session;
 		sess.user_id = result[0].user_id;
-		 //console.log("matched!");
-		 //console.log(sess.user_id);
-			
+		
 		loadAdmin(req,res);
 	}else{
-		//console.log(sess.user_id);
-		//console.log("unmatched!");
 		 res.render('login');
 	}
   });
@@ -121,7 +101,7 @@ app.use(function(req, res, next) {
 	app.post('/logout',loadUser,function (req, res) {
 	sess = req.session;
 	sess.user_id = null;
-    res.render('login');
+   	res.render('login');
   
 });
 
@@ -131,7 +111,6 @@ app.use(function(req, res, next) {
 			var sql = "select * from bookings where user_id = ? ";
 			  db.query(sql,sess.user_id, function (err, result) {
 				if (err) throw err;
-				//console.log(result);
 					if (result.length > 0) {
 						var message = "you have already booked the bike!! Come back later.";
 						res.render("admin",{message:message});
@@ -139,7 +118,6 @@ app.use(function(req, res, next) {
 					else 
 					{
 						sess.model_id = req.body.model_id;
-						//console.log(sess.model_id);
 						res.render("upload");	
 					}
 			  });
@@ -154,29 +132,21 @@ app.use(function(req, res, next) {
 			  var newpath = 'C:/Users/OWNER/Desktop/onTrack/public/files/' + files.filetoupload.name;
 			  fs.rename(oldpath, newpath, function (err) {
 				if (err) throw err;
-				//console.log(oldpath);
-				//console.log(newpath);
 			  });
 	  
-			  
 			  var params = [newpath,sess.user_id];
 			  var sql = "UPDATE users SET id_proof =? WHERE user_id =?";
 			  db.query(sql,params, function (err, result) {
 				if (err) throw err;
-				//console.log("1 record updated");
 			  });
 		
 			  var sql = "SELECT * FROM bikes WHERE model_id=? LIMIT 1";
 			  db.query(sql,sess.model_id, function (err, result) {
 				if (err) throw err;
-				//console.log("1 record inserted");
-				//console.log(result[0].bike_id);
-				//sess.bike_id = result[0].bike_id;
-				
+				  
 				var sql = "UPDATE bikes SET availability=0 WHERE bike_id =?";
 			  db.query(sql,result[0].bike_id, function (err, result) {
 				if (err) throw err;
-				//console.log("1 record updated");
 			  });
 			  
 			  var params = [result[0].bike_id,sess.user_id];
@@ -184,7 +154,6 @@ app.use(function(req, res, next) {
 			  var sql = "INSERT INTO bookings (bike_id,user_id) VALUES (?,?)";
 			  db.query(sql,params, function (err, result) {
 				if (err) throw err;
-				//console.log("1 record inserted");
 			  });
 
 			  	res.render('booking_date',{bike_id:result[0].bike_id});
@@ -195,30 +164,21 @@ app.use(function(req, res, next) {
 	app.post('/set_date',loadUser,function(req,res){
 	sess = req.session;
 	
-	//console.log(req.body.booking_date);
-	//console.log(sess.user_id);
-	//console.log(req.body.bike_id);
-	
 	var start_date = req.body.booking_date;
 	var end_date = new Date(req.body.booking_date);
 	var n = end_date.getMonth();
 	n++;
 	end_date.setMonth(n);
-	
-	//console.log(start_date);
-	//console.log(end_date);
-	
+		
 		var params = [start_date,end_date,sess.user_id];
 			  var sql = "UPDATE bookings SET start_date =? , end_date =? WHERE user_id =?";
 			  db.query(sql,params, function (err, result) {
 				if (err) throw err;
-				//console.log("1 record updated");
 			  });
 			  
 			  var sql = "select B.pickup_address from bikes As A inner join renters As B on A.renter_id = B.renter_id where A.bike_id = ? ";
 			  db.query(sql,req.body.bike_id, function (err, result) {
 				if (err) throw err;
-				//console.log("1 record updated");
 				res.render("admin",{pickup_address:result[0].pickup_address});
 			  });
 	});

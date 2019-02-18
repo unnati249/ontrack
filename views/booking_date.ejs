@@ -1,33 +1,26 @@
 
 <% include ./header %>
-	
-	<div>
-	<form action="/logout" method="post">
-    <button type="submit" class="btn btn-primary btn-block" style="background-color:#4e44d8; width: fit-content; position: absolute;
-    right: 20px;
-    top: 60px; " > Log out</button>
-	</form>
-	</div>
-	
-	<article class="card-body mx-auto" style="max-width: 400px;">
-		<h4 class="card-title mt-3 text-center">Select Booking Date</h4>
-	
-	<form action="/set_date" method="post" >
-	<div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-file"></i> </span>
-		</div>
-		<input type="date" name="booking_date"><br>  
-		
-		<input type="hidden" id="bike_id" name="bike_id" value="<%=bike_id%>">
-	</div>
-	
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block" style="background-color:#4e44d8;"> Select Date </button>
-    </div> <!-- form-group// -->      
-</form>
+<div>
+   <form action="/logout" method="post">
+      <button type="submit" class="btn btn-primary btn-block" style="background-color:#4e44d8; width: fit-content; position: absolute;
+         right: 20px;
+         top: 60px; " > Log out</button>
+   </form>
+</div>
+<article class="card-body mx-auto" style="max-width: 400px;">
+   <h4 class="card-title mt-3 text-center">Select Booking Date</h4>
+   <form action="/set_date" method="post" >
+      <div class="form-group input-group">
+         <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-file"></i> </span>
+         </div>
+         <input type="date" name="booking_date"><br>  
+         <input type="hidden" id="bike_id" name="bike_id" value="<%=bike_id%>">
+      </div>
+      <div class="form-group">
+         <button type="submit" class="btn btn-primary btn-block" style="background-color:#4e44d8;"> Select Date </button>
+      </div>
+      <!-- form-group// -->      
+   </form>
 </article>
-	
-
 <% include ./footer %>
-	
